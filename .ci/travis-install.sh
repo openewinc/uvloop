@@ -3,9 +3,6 @@
 set -e -x
 
 if [ "${TRAVIS_OS_NAME}" == "osx" ]; then
-    # https://github.com/travis-ci/travis-ci/issues/6307#issuecomment-233315824
-    rvm get head
-
     git clone --depth 1 https://github.com/yyuu/pyenv.git ~/.pyenv
     PYENV_ROOT="$HOME/.pyenv"
     PATH="$PYENV_ROOT/bin:$PATH"
@@ -28,3 +25,5 @@ fi
 pip install --upgrade pip wheel
 pip install --upgrade setuptools
 pip install -r .ci/requirements.txt
+
+set +e +x

@@ -5,6 +5,7 @@ set -e -x
 
 if [[ "${TRAVIS_BRANCH}" != "releases" || "${BUILD}" != *wheels* ]]; then
     # Not a release
+    set +e +x
     exit 0
 fi
 
@@ -21,6 +22,7 @@ PYPI_VERSION=$(python ".ci/pypi-check.py" "${PYMODULE}")
 
 if [ "${PACKAGE_VERSION}" == "${PYPI_VERSION}" ]; then
     echo "${PYMODULE}-${PACKAGE_VERSION} is already published on PyPI"
+    set +e +x
     exit 1
 fi
 
@@ -70,3 +72,5 @@ elif [ "${TRAVIS_OS_NAME}" == "osx" ]; then
 else
     echo "Cannot build on ${TRAVIS_OS_NAME}."
 fi
+
+set +e +x

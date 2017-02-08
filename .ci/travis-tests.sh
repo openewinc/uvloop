@@ -4,6 +4,7 @@ set -e -x
 
 if [[ "${BUILD}" != *tests* ]]; then
     echo "Skipping tests."
+    set +e +x
     exit 0
 fi
 
@@ -15,3 +16,5 @@ fi
 
 make distclean && make && make test
 make distclean && make debug && make test
+
+set +e +x

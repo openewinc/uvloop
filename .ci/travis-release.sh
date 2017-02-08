@@ -5,6 +5,7 @@ set -e -x
 
 if [ -z "${TRAVIS_TAG}" ]; then
     # Not a release
+    set +e +x
     exit 0
 fi
 
@@ -14,6 +15,7 @@ PYPI_VERSION=$(python ".ci/pypi-check.py" "${PYMODULE}")
 
 if [ "${PACKAGE_VERSION}" == "${PYPI_VERSION}" ]; then
     echo "${PYMODULE}-${PACKAGE_VERSION} is already published on PyPI"
+    set +e +x
     exit 0
 fi
 
@@ -44,8 +46,10 @@ _file_exists() { [[ -f $1 ]]; }
 for distfile in "${expected_wheels[@]}"; do
     if ! _file_exists dist/${distfile}; then
         echo "Expected wheel ${distfile} not found."
+        set +e +x
         exit 1
     fi
 done
 
 python -m twine upload dist/*.whl dist/*.tar.*
+set +e +x

@@ -23,3 +23,5 @@ ${PIP} install ${PYMODULE} --no-index -f file:///io/dist
 rm -rf /io/tests/__pycache__
 make -C /io/ PYTHON="${PYTHON}" test
 rm -rf /io/tests/__pycache__
+
+set +e +x
